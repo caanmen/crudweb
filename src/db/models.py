@@ -2,6 +2,27 @@ from sqlalchemy.orm import declarative_base, relationship
 from sqlalchemy import Column, DateTime, ForeignKey, Integer, String, JSON
 from enum import Enum
 from uuid import uuid4
+from sqlalchemy import Column, Integer, String
+from .db_client import Base
+
+Base = declarative_base()
+
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(String, primary_key=True, default=lambda: uuid4().hex)
+    name = Column(String)
+    surname = Column(String)
+    email = Column(String)
+    phone_number = Column(Integer)
+    gender = Column(String)
+
+class Empleado(Base):
+    __tablename__ = 'empleado'
+    id = Column(Integer, primary_key=True, index=True)
+    nombre = Column(String, index=True)
+    cargo = Column(String)
+    salario = Column(Integer)
 
 
 Base = declarative_base()

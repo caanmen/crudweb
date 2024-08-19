@@ -2,6 +2,27 @@ from config import DB_CONNECTION_STRING
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncEngine, async_sessionmaker
 from db.models import Base, User
 from sqlalchemy import select
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+
+SQLALCHEMY_DATABASE_URL = "sqlite:///C:/arquitectura/crud-web-application-dev/src/db/base.db"
+
+
+engine = create_engine(
+    SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
+)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+Base = declarative_base()
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
 
 
 class DBClient:
